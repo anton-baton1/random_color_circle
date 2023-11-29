@@ -23,24 +23,20 @@ class Example(QMainWindow, Ui_MainWindow):
         self.circle_btn.clicked.connect(self.click)
 
     def paintEvent(self, event):
-        qp = QPainter()
-        qp.begin(self)
-        qp.setBrush(
-            QBrush(QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)), Qt.SolidPattern))
-        pos_x, pos_y = random.randint(0, 400), random.randint(0, 300)
-        diameter = random.randint(0, 100)
-        qp.drawEllipse(pos_x, pos_y, diameter, diameter)
-        qp.end()
+        if self.paint:
+            qp = QPainter()
+            qp.begin(self)
+            qp.setBrush(
+                QBrush(QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)), Qt.SolidPattern))
+            pos_x, pos_y = random.randint(0, 400), random.randint(0, 300)
+            diameter = random.randint(0, 100)
+            qp.drawEllipse(pos_x, pos_y, diameter, diameter)
+            qp.end()
+        self.paint = False
 
     def click(self):
         self.paint = True
         self.update()
-
-    def paint(self, qp):
-        qp.setBrush(QBrush(Qt.red, Qt.SolidPattern))
-        pos_x, pos_y = random.randint(0, 400), random.randint(0, 300)
-        diameter = random.randint(0, 100)
-        qp.drawEllipse(pos_x, pos_y, diameter, diameter)
 
 
 def except_hook(cls, exception, traceback):
